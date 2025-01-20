@@ -1,0 +1,98 @@
+class Practical5{
+  
+  public static void main(String args[])
+  {
+  }
+
+int getfactorial1(int number)
+{
+
+if(number>=0)
+{
+   if(number<2)
+   {
+   return 1;
+   }
+   else 
+   {
+   int fact=2;
+   for(;number>2;)
+   {
+   fact*=number--;
+   }
+   return fact;
+ }
+   
+}
+else
+{
+return -1;
+}
+}
+
+
+int getfactorial2(int number)
+{
+	if(number>=0)
+	{
+          if(number<2)
+          {
+            return 1;
+            }
+            else
+            {
+            int fact=2;
+            while(number>2)
+            {
+              fact*=number--;
+              }
+              return fact;
+            }  
+         }
+   else
+   {
+      return -1;
+      }
+      
+      }
+			
+			
+
+   int getfactorial3(int number)
+{
+    if (number >= 0) 
+    {  
+        if(number<2)
+        {
+        
+        return 1; 
+    } 
+    
+    else 
+    {   
+        return number * getfactorial3(number - 1); 
+    }
+    }
+    else
+    {
+    return -1;
+    }
+}
+     
+     
+     
+  int getSum(int[] number)
+  {
+    int n=number.length;
+    
+   if(n>0){
+      
+      return number[n-1]+getSum(Arrays.copyOf(number,n-1));
+      }
+      
+      {
+       return 0;
+       }
+       }
+      
+   }
