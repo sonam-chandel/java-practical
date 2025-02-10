@@ -1,0 +1,138 @@
+class Practical8{
+  
+  public static void main(String[] args)
+  {  
+     
+    display(1,3);
+    System.out.println();
+    display1(1,3);
+    System.out.println();
+    display2(1,3);
+     
+       }
+       
+       
+       static  void display(int ln,int size)
+   {
+       if(ln<=size)
+       {
+          print(ln,1);
+          
+         System.out.println();
+         display(ln+1,size);
+          
+     }
+      print(ln,1);
+     System.out.println(); 
+    
+  }
+
+static void print(int ln,int p)
+{
+   if(p<=ln)
+   {
+      System.out.print("*");
+      print(ln,p+1); 
+    }
+  }
+  
+ static  void display1(int ln,int size)
+   {
+       if(ln<=size+1)
+       {
+          
+        printspace1(ln,1,size);
+        printstar1(ln,1,size);
+        System.out.println();
+        display1(ln+1,size);
+        if(ln<=size)
+        {
+        printspace1(ln,1,size);
+        printslash1(ln,1);
+        System.out.println();
+      }
+  }
+  }
+
+static void printstar1(int ln,int p,int size)
+{
+   if(p<=ln)
+   {
+     if(ln<=size)
+     {
+      System.out.print("*");
+     }
+    else if(ln==size+1)
+      {
+       System.out.print("+");
+    }
+     
+     printstar1(ln,p+1,size);
+    }
+  }
+  static void printspace1(int ln,int space,int size)
+    {
+      if(space<=size+1-ln)
+      {
+         System.out.print(" ");
+        printspace1(ln,space+1,size);
+      }
+    }
+    
+    static void printslash1(int ln,int slash)
+  {
+    if(slash<=ln)
+      {
+          
+      System.out.print("/");
+        
+        printslash1(ln,slash+1);
+      }
+  }
+  
+  
+  static void display2(int ln,int size)
+  {
+     if(ln<=size+1)
+     {
+        printspace2(ln,size,1);
+        printpattern2(ln,1);
+        System.out.println();
+         display2(ln+1,size);
+      }
+      printspace2(ln,size,1);
+        printpattern2(ln,1);
+        System.out.println();
+  }
+  
+   static void printspace2(int ln,int size,int space)
+   {
+      if(space<=size+2-ln)
+      {
+         System.out.print(" ");
+         printspace2(ln,size,space+1);
+      }
+      }
+      
+    static void printpattern2(int ln,int pattern)
+    {
+      if(pattern<=2*ln-1)
+      {
+         if(ln%2==1)
+         {
+           System.out.print("*");
+          }
+          
+          else
+          {
+           System.out.print("/");
+        }
+        
+        printpattern2(ln,pattern+1);
+}
+
+}
+
+
+
+}
