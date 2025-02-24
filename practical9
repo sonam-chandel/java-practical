@@ -1,0 +1,92 @@
+public class Practical9 {
+
+    public static int[] generateArray() {
+        int[] array = new int[20];
+        for (int i = 0; i < 20; i++) {
+            array[i] = (int) ((System.nanoTime() % 100) + 1);
+        }
+        return array;
+    }
+
+    public static long iterativeFactTime(int number) {
+        long startTime = System.nanoTime();
+        int result = 1;
+        for (int i = 1; i <= number; i++) {
+            result = result * i;
+        }
+        return System.nanoTime() - startTime;
+    }
+
+    private static int recursiveFact(int number) {
+        if (number == 1 || number == 0) {
+            return 1;
+        }
+        return number * recursiveFact(number - 1);
+    }
+
+    public static long recursiveFactTime(int number) {
+        long startTime = System.nanoTime();
+        int result = recursiveFact(number);
+        return System.nanoTime() - startTime;
+    }
+
+    public static void compareFactTimes() {
+        int[] array = generateArray();
+        long totalIterativeTime = 0;
+        long totalRecursiveTime = 0;
+
+        for (int i = 0; i < array.length; i++) {
+            int number = array[i];
+            long iterativeTimeSum = 0;
+            long recursiveTimeSum = 0;
+            for (int j = 0; j < 10; j++) {
+                iterativeTimeSum += iterativeFactTime(number);
+                recursiveTimeSum += recursiveFactTime(number);
+            }
+            totalIterativeTime += iterativeTimeSum / 10;
+            totalRecursiveTime += recursiveTimeSum / 10;
+        }
+
+        if (totalIterativeTime < totalRecursiveTime) {
+            System.out.println("Iteration is fast");
+        } else {
+            System.out.println("Recursion is fast");
+        }
+    }
+
+    public static String generateString(int size) {
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            char randomCharacter = (char) ((System.nanoTime() % 52) + 97); 
+            if (randomCharacter > 'z') randomCharacter = (char) (randomCharacter - 26);
+            s.append(randomCharacter);
+        }
+        return s.toString();
+    }
+
+    public static void compareStringTime(int size) {
+        String s = generateString(size);
+
+        long startTime = System.nanoTime();
+        String str1 = s + s;
+        long stringTime = System.nanoTime() - startTime;
+
+        startTime = System.nanoTime();
+        StringBuilder sb = new StringBuilder(s);
+        sb.append(s);
+        long stringBuilderTime = System.nanoTime() - startTime;
+
+        startTime = System.nanoTime();
+        StringBuffer sbf = new StringBuffer(s);
+        sbf.append(s);
+        long stringBufferTime = System.nanoTime() - startTime;
+
+        if (stringTime < stringBuilderTime && stringTime < stringBufferTime) {
+            System.out.println("String is fast");
+        } else if (stringBuilderTime < stringTime && stringBuilderTime < stringBufferTime) {
+            System.out.println("StringBuilder is fast");
+        } else {
+            System.out.println("StringBuffer is fast");
+        }
+    }
+}
