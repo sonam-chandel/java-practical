@@ -1,0 +1,68 @@
+class Sudokugame{
+
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.out.println("Enter the grid size");
+            return;
+        }
+
+        int size = Integer.parseInt(args[0]);
+        int length = args[0].length();
+        System.out.println(displayGridSize(size, length));
+    }
+
+   
+    static String displayGridSize(int size, int length) {
+        String[][] elements = insertDigit(size, length); 
+        StringBuilder pattern = new StringBuilder();
+
+        for (int ln = 1; ln <= 2 * size + 1; ln++) {
+            for (int p = 2 * size + 1; p > 0; p--) {
+                if (ln % 2 == 1) {  
+                    if (p % 2 == 1) {
+                        pattern.append(" ");
+                    } else {
+                        pattern.append("_");
+                    }
+                } else {  
+                    if (p % 2 == 1) {
+                        pattern.append("|");
+                    } else {
+                        
+                        int rowIndex = (ln - 1) / 2;
+                        int colIndex = (p - 1) / 2;
+                        if (rowIndex < size && colIndex < size) {
+                            pattern.append(elements[rowIndex][colIndex]);
+                        } else {
+                            pattern.append(" ");  
+                        }
+                    }
+                }
+            }
+            pattern.append("\n");
+        }
+
+        return pattern.toString();
+    }
+
+   
+    static String[][] insertDigit(int size, int length) {
+        String[][] elements = new String[size][size];
+        int count;
+        for (int i = 0; i < size; i++) {
+            count = i;
+            for (int j = 0; j < size; j++) {
+                int random = (int) (System.nanoTime() % size);
+                if ((random == i) || (random == j)) {
+                  
+                    elements[i][j] = String.format("%" + length + "s", (count % size) + 1);
+                } else {
+                    elements[i][j] = String.format("%" + length + "s", ""); 
+                }
+                count++;
+            }
+        }
+
+        return elements;
+    }
+}
