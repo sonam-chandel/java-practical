@@ -1,0 +1,195 @@
+import java.util.Random;
+import java.util.Scanner;
+
+class SudokuGame {
+    private static int gridDimension;
+    private static int[][] board;
+    private static int[][] solutionBoard;
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the grid dimension of Sudoku (e.g.,3 for 3x3 grid): ");
+        gridDimension = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Choose a difficulty level (level1, level2, level3): ");
+        String difficulty = scanner.nextLine().toLowerCase();
+
+        board = new int[gridDimension][gridDimension];
+        createSudokuBoard(board, gridDimension);
+        solutionBoard = duplicateBoard(board);
+
+        removeCellsFromBoard(board, gridDimension, difficulty);
+
+        showBoard(board, gridDimension);
+        getPlayerInput(board, gridDimension);
+        checkPlayerSolution(board, gridDimension);
+
+        scanner.close();
+    }
+
+    public static void createSudokuBoard(int[][] board, int gridDimension) {
+        Random randomGenerator = new Random();
+        int[] numbersArray = new int[gridDimension];
+
+        
+        for (int i = 0; i < gridDimension; i++) {
+            numbersArray[i] = i + 1;
+        }
+        shuffleArray(numbersArray, randomGenerator);
+        System.arraycopy(numbersArray, 0, board[0], 0, gridDimension);
+
+      
+        fillBoard(board, 0, 0, gridDimension);
+    }
+
+    private static boolean fillBoard(int[][] board, int row, int col, int gridDimension) {
+        if (row == gridDimension) {
+            return true;
+        }
+        if (col == gridDimension) {
+            return fillBoard(board, row + 1, 0, gridDimension);
+        }
+        if (board[row][col] != 0) {
+            return fillBoard(board, row, col + 1, gridDimension);
+        }
+
+        Random randomGenerator = new Random();
+        int[] numbersArray = new int[gridDimension];
+        for (int i = 0; i < gridDimension; i++) {
+            numbersArray[i] = i + 1;
+        }
+        shuffleArray(numbersArray, randomGenerator);
+
+        for (int num : numbersArray) {
+            if (isValidPosition(board, row, col, num, gridDimension)) {
+                board[row][col] = num;
+                if (fillBoard(board, row, col + 1, gridDimension)) {
+                    return true;
+                }
+                board[row][col] = 0;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isValidPosition(int[][] board, int row, int col, int num, int gridDimension) {
+        for (int i = 0; i < gridDimension; i++) {
+            if (board[row][i] == num || board[i][col] == num) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void removeCellsFromBoard(int[][] board, int gridDimension, String difficulty) {
+        Random randomGenerator = new Random();
+        int cellsToRemove;
+
+        switch (difficulty) {
+            case "level1":
+                cellsToRemove = gridDimension;
+                break;
+            case "level2":
+                cellsToRemove = (gridDimension * gridDimension) - (gridDimension * gridDimension / 3);
+                break;
+            case "level3":
+                cellsToRemove = (gridDimension * gridDimension) - 1;
+                break;
+            default:
+                cellsToRemove = (gridDimension * gridDimension) - (gridDimension * gridDimension / 3);
+        }
+
+        while (cellsToRemove > 0) {
+            int row = randomGenerator.nextInt(gridDimension);
+            int col = randomGenerator.nextInt(gridDimension);
+            if (board[row][col] != 0) {
+                board[row][col] = 0;
+                cellsToRemove--;
+            }
+        }
+    }
+
+    public static void showBoard(int[][] board, int gridDimension) {
+        int maxDigitLength = String.valueOf(gridDimension).length();
+        int cellWidth = maxDigitLength + 2;
+
+        StringBuilder separator = new StringBuilder(".");
+        for (int i = 0; i < gridDimension; i++) {
+            separator.append("-".repeat(cellWidth)).append(".");
+        }
+        String separatorLine = separator.toString();
+        System.out.println(separatorLine);
+
+        for (int i = 0; i < gridDimension; i++) {
+            System.out.print("|");
+            for (int j = 0; j < gridDimension; j++) {
+                String cellValue = (board[i][j] == 0 ? " ".repeat(maxDigitLength) : String.format("%" + maxDigitLength + "d", board[i][j]));
+                System.out.print(" " + cellValue + " |");
+            }
+            System.out.println();
+            System.out.println(separatorLine);
+        }
+    }
+
+    public static void getPlayerInput(int[][] board, int gridDimension) {
+        Scanner scanner = new Scanner(System.in);
+        for (int row = 0; row < gridDimension; row++) {
+            for (int col = 0; col < gridDimension; col++) {
+                if (board[row][col] == 0) {
+                    System.out.print("Enter value for row " + (row + 1) + ", column " + (col + 1) + ": ");
+                    board[row][col] = scanner.nextInt();
+                    showBoard(board, gridDimension);
+                }
+            }
+        }
+    }
+
+    public static void checkPlayerSolution(int[][] board, int gridDimension) {
+        if (isValidSolution(board, gridDimension)) {
+            System.out.println("Great job! You've solved the Sudoku!");
+        } else {
+            System.out.println("Oops! The solution is incorrect. Please try again.");
+        }
+    }
+
+    public static boolean isValidSolution(int[][] board, int gridDimension) {
+        for (int i = 0; i < gridDimension; i++) {
+            boolean[] rowCheck = new boolean[gridDimension + 1];
+            boolean[] colCheck = new boolean[gridDimension + 1];
+
+            for (int j = 0; j < gridDimension; j++) {
+                int rowValue = board[i][j];
+                int colValue = board[j][i];
+
+                if (rowValue < 1 || rowValue > gridDimension || rowCheck[rowValue]) {
+                    return false;
+                }
+                if (colValue < 1 || colValue > gridDimension || colCheck[colValue]) {
+                    return false;
+                }
+                rowCheck[rowValue] = true;
+                colCheck[colValue] = true;
+            }
+        }
+        return true;
+    }
+
+    public static int[][] duplicateBoard(int[][] originalBoard) {
+        int[][] newBoard = new int[gridDimension][gridDimension];
+        for (int i = 0; i < gridDimension; i++) {
+            System.arraycopy(originalBoard[i], 0, newBoard[i], 0, gridDimension);
+        }
+        return newBoard;
+    }
+
+    private static void shuffleArray(int[] array, Random randomGenerator) {
+        for (int i = array.length - 1; i > 0; i--) {
+            int index = randomGenerator.nextInt(i + 1);
+            int temp = array[index];
+            array[index] = array[i];
+            array[i] = temp;
+        }
+    }
+}
