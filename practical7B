@@ -1,0 +1,208 @@
+ public class Practical7
+{
+   public static void main(String args[])
+   {
+   getS(1);
+   getO(1);
+   getN(1);
+   getA(1);
+   getM(1);
+  } 
+  
+static void getS(int size) {
+    size = size + 4;
+
+    for (int ln = 1; ln <= size; ln++) {
+        for (int p = 1; p <= size; p++) {
+            if (ln <= size / 2 + 1) {
+                if (ln == 1 || ln == size / 2 + 1) {
+                    if (p == 1 || p == size) {
+                        System.out.print(" ");
+                    } else {
+                        System.out.print("*");
+                    }
+                } else if (p == 1) {
+                    System.out.print("*");
+                } else {
+                    System.out.print(" ");
+                }
+            } else {
+                if (ln == size) {
+                    if (p == 1 || p == size) {
+                        System.out.print(" ");
+                    } else {
+                        System.out.print("*");
+                    }
+                } else if (p == size) {
+                    System.out.print("*");
+                } else {
+                    System.out.print(" ");
+                }
+            }
+        }
+        
+        System.out.println();
+    }
+}
+
+      
+  
+static void getO(int size)
+   {
+   
+      size=size+4;
+   
+    for(int ln=1;ln<=size;ln++)
+    {
+   
+    for(int p=1;p<=size;p++)
+    {
+       if(ln==1||ln==size)
+       {
+         if(p==1||p==size)
+         {
+       System.out.print(" ");
+         }
+         else
+               {
+         System.out.print("*");
+         }
+     }
+         else if(p==1||p==size)
+         {
+            System.out.print("*");
+        }
+        else
+        {
+         System.out.print(" ");
+      }
+      
+      }
+       System.out.println();
+      }
+ }
+    
+   
+static void getA(int size)
+   {
+          
+    
+      
+      size=size+4;
+   
+    for(int ln=1;ln<=size;ln++)
+    {
+     
+      for(int p=1;p<=size;p++)
+          {
+              if(ln==1)
+              {
+               if(p==1||p==size)
+               {
+              System.out.print(" ");
+                 }
+                 else
+                 {
+                  System.out.print("*");
+                    }
+              }
+                else if(ln==size/2+1)
+                {
+              System.out.print("*");
+                   }
+                   else if(p==1||p==size)
+                   {
+               System.out.print("*");
+                   }
+                 else
+                 {
+               System.out.print(" ");
+                  }
+        }
+       System.out.println();
+      }
+
+}
+
+static void getN(int size)
+{
+  
+     size=size+4;
+   
+    for(int ln=1;ln<=size;ln++)
+    {
+    
+       for(int p=1;p<=size;p++)
+       {
+         if(ln<=size/2+1)
+         {
+           if(p==1||p==size)
+       {
+       System.out.print("*");
+        }
+        else if(p==ln)
+        {
+           System.out.print("*");
+      }
+      else
+      {
+     System.out.print(" ");
+        }
+      }
+      else
+      {
+       if(p==1||p==size||p==ln)
+       {
+        System.out.print("*");
+        }
+        else
+        {
+        System.out.print(" ");
+         }
+         }
+       }
+    System.out.println();
+    }
+   }
+
+
+static void getM(int size)
+{
+  
+    size=size+4;
+   
+    for(int ln=1;ln<=size;ln++)
+    {
+   for(int p=1;p<=size;p++)
+    {
+      if(ln<=size/2+1)
+      {
+        if(p==1||p==size)
+          {
+             System.out.print("*");
+          }
+         else if(p==ln||p==size-ln+1)
+         {
+           System.out.print("*");
+           }
+           else
+           {
+             System.out.print(" ");
+           }
+        }
+        else
+        {
+           if(p==1||p==size)
+          {
+           System.out.print("*");
+          }
+          else
+          {
+            System.out.print(" ");
+           }
+          }
+      }
+      System.out.println();
+      }
+    }  
+}
